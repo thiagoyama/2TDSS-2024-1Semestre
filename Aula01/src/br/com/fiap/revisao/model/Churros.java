@@ -4,8 +4,8 @@ public class Churros extends Produto {
 
     //Criar o atributo sabor
     private String sabor;
-    //Construtores
 
+    //Construtores
     public Churros() {
     }
 
