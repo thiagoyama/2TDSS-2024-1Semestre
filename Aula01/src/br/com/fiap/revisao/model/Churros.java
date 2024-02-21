@@ -5,6 +5,8 @@ public class Churros extends Produto {
     //Criar o atributo sabor
     private String sabor;
 
+    private TipoChurros tipo;
+
     //Construtores
     public Churros() {
     }
@@ -34,5 +36,12 @@ public class Churros extends Produto {
         this.sabor = sabor;
     }
 
+    public TipoChurros getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoChurros tipo) {
+        this.tipo = tipo;
+    }
 
 }
