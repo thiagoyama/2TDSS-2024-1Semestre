@@ -13,5 +13,4 @@ public class Mercado {
     private String nome;
     private CategoriaMercado categoria;
 
-
 }
