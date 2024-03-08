@@ -1,6 +1,7 @@
 package br.com.fiap.aula03.controller;
 
 import br.com.fiap.aula03.dto.CadastroMercadoDto;
+import br.com.fiap.aula03.dto.DetalhesMercadoDto;
 import br.com.fiap.aula03.model.CategoriaMercado;
 import br.com.fiap.aula03.model.Mercado;
 import br.com.fiap.aula03.repository.MercadoRepository;
@@ -20,11 +21,12 @@ public class MercadoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Mercado> cadastrar(@RequestBody Mercado mercadoDto,
-                                             UriComponentsBuilder uri){
-        mercadoRepository.save(mercadoDto);
-        var url = uri.path("/mercados/{id}").buildAndExpand(mercadoDto.getId()).toUri();
-        return ResponseEntity.created(url).body(mercadoDto);
+    public ResponseEntity<DetalhesMercadoDto> cadastrar(@RequestBody CadastroMercadoDto mercadoDto,
+                                                        UriComponentsBuilder uri){
+        var mercado = new Mercado(mercadoDto);
+        mercadoRepository.save(mercado);
+        var url = uri.path("/mercados/{id}").buildAndExpand(mercado.getId()).toUri();
+        return ResponseEntity.created(url).body(new DetalhesMercadoDto(mercado));
     }
 
     @GetMapping
