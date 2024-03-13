@@ -22,10 +22,14 @@ public class Mercado {
     private Integer id;
     private String nome;
     private CategoriaMercado categoria;
+    private String cnpj;
+    private Double faturamento;
 
     //Cria um construtor que recebe o dto para cadastro
     public Mercado(CadastroMercadoDto mercadoDto) {
         nome = mercadoDto.nome();
         categoria = mercadoDto.categoria();
+        cnpj = mercadoDto.cnpj();
+        faturamento = mercadoDto.faturamento();
     }
 }
