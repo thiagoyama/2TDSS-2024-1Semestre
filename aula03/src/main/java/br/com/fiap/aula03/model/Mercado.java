@@ -1,6 +1,7 @@
 package br.com.fiap.aula03.model;
 
-import br.com.fiap.aula03.dto.CadastroMercadoDto;
+import br.com.fiap.aula03.dto.mercado.AtualizacaoMercadoDto;
+import br.com.fiap.aula03.dto.mercado.CadastroMercadoDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -31,5 +32,14 @@ public class Mercado {
         categoria = mercadoDto.categoria();
         cnpj = mercadoDto.cnpj();
         faturamento = mercadoDto.faturamento();
+    }
+
+    public void atualizarDados(AtualizacaoMercadoDto mercadoDto) {
+        if (mercadoDto.nome() != null)
+            nome = mercadoDto.nome();
+        if (mercadoDto.categoria() != null)
+            categoria = mercadoDto.categoria();
+        if (mercadoDto.faturamento() != null)
+            faturamento = mercadoDto.faturamento();
     }
 }

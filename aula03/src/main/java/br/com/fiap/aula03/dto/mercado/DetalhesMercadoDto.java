@@ -1,4 +1,4 @@
-package br.com.fiap.aula03.dto;
+package br.com.fiap.aula03.dto.mercado;
 
 import br.com.fiap.aula03.model.CategoriaMercado;
 import br.com.fiap.aula03.model.Mercado;

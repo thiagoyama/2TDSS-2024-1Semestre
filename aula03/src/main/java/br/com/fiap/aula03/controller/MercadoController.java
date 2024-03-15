@@ -1,20 +1,17 @@
 package br.com.fiap.aula03.controller;
 
-import br.com.fiap.aula03.dto.CadastroMercadoDto;
-import br.com.fiap.aula03.dto.DetalhesMercadoDto;
-import br.com.fiap.aula03.dto.ListagemMercadoDto;
-import br.com.fiap.aula03.model.CategoriaMercado;
+import br.com.fiap.aula03.dto.mercado.AtualizacaoMercadoDto;
+import br.com.fiap.aula03.dto.mercado.CadastroMercadoDto;
+import br.com.fiap.aula03.dto.mercado.DetalhesMercadoDto;
+import br.com.fiap.aula03.dto.mercado.ListagemMercadoDto;
 import br.com.fiap.aula03.model.Mercado;
 import br.com.fiap.aula03.repository.MercadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import java.util.List;
 
 @RestController
@@ -27,6 +24,24 @@ public class MercadoController {
     @GetMapping("{id}")
     public ResponseEntity<DetalhesMercadoDto> buscar(@PathVariable("id") Integer id){
         var mercado = mercadoRepository.getReferenceById(id);
+        return ResponseEntity.ok(new DetalhesMercadoDto(mercado));
+    }
+
+    @DeleteMapping("{id}")
+    @Transactional
+    public ResponseEntity<Void> deletar(@PathVariable("id") Integer id){
+        mercadoRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("{id}")
+    @Transactional
+    public ResponseEntity<DetalhesMercadoDto> atualizar(@PathVariable("id") Integer id,
+                                                        @RequestBody AtualizacaoMercadoDto mercadoDto){
+        //pesquisando o mercado no banco
+        var mercado = mercadoRepository.getReferenceById(id);
+        //atualizar os dados do objeto do banco com os dados do dto
+        mercado.atualizarDados(mercadoDto);
         return ResponseEntity.ok(new DetalhesMercadoDto(mercado));
     }
 

@@ -1,5 +1,7 @@
 package br.com.fiap.aula03.controller;
 
+import br.com.fiap.aula03.dto.produto.CadastroProdutoDto;
+import br.com.fiap.aula03.dto.produto.DetalhesProdutoDto;
 import br.com.fiap.aula03.model.Produto;
 import br.com.fiap.aula03.repository.ProdutoRespository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +21,11 @@ public class ProdutoController {
     private ProdutoRespository produtoRespository;
     @PostMapping
     @Transactional
-    public ResponseEntity<Produto> post(@RequestBody Produto produto, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<DetalhesProdutoDto> post(@RequestBody CadastroProdutoDto dto, UriComponentsBuilder uriBuilder){
+        var produto = new Produto(dto);
         produtoRespository.save(produto);
         var uri = uriBuilder.path("/produtos/{id}").buildAndExpand(produto.getId()).toUri();
-        return ResponseEntity.created(uri).body(produto);
+        return ResponseEntity.created(uri).body(new DetalhesProdutoDto(produto));
     }
 
 }
