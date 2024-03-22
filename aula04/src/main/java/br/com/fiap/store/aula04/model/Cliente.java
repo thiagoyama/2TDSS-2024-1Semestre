@@ -1,5 +1,6 @@
 package br.com.fiap.store.aula04.model;
 
+import br.com.fiap.store.aula04.dto.cliente.CadastroClienteDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,5 +45,13 @@ public class Cliente {
 
     @Column(name="nr_pontos", precision = 10)
     private Integer pontos;
+
+
+    public Cliente(CadastroClienteDto dto){
+        nome = dto.nome();
+        cpf = dto.cpf();
+        dataNascimento = dto.dataNascimento();
+        categoria = dto.categoria();
+    }
 
 }
