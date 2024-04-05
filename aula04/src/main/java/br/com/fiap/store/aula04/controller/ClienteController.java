@@ -4,6 +4,7 @@ import br.com.fiap.store.aula04.dto.cliente.CadastroClienteDto;
 import br.com.fiap.store.aula04.dto.cliente.DetalhesClienteDto;
 import br.com.fiap.store.aula04.model.Cliente;
 import br.com.fiap.store.aula04.repository.ClienteRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +23,7 @@ public class ClienteController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<DetalhesClienteDto> cadastrar(@RequestBody CadastroClienteDto clienteDto,
+    public ResponseEntity<DetalhesClienteDto> cadastrar(@RequestBody @Valid CadastroClienteDto clienteDto,
                                                         UriComponentsBuilder uriBuilder){
         var cliente = new Cliente(clienteDto);
         clienteRepository.save(cliente);
