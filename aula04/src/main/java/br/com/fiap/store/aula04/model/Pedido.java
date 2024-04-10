@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter @Setter
 @NoArgsConstructor
@@ -30,5 +32,20 @@ public class Pedido {
     //cascade - realiza as ações em cascata, ou seja, se cadastrar/atualizar/remover o pedido a nota tb pode sofrer a mesma ação
     @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)
     private NotaFiscal notaFiscal;
+
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinColumn(name = "cd_cliente", nullable = false)
+    private Cliente cliente;
+
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<ProdutoPedido> itens = new ArrayList<>();
+
+    //Método para "setar" a FK na tabela ProdutoPedido
+    public void addItens(ProdutoPedido item){
+        //Setar a FK no item
+        item.setPedido(this);
+        //Adicionar o item na lista
+        itens.add(item);
+    }
 
 }

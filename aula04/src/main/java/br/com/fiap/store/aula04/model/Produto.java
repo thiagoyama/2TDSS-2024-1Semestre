@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter @Setter
 @NoArgsConstructor
@@ -46,5 +47,8 @@ public class Produto {
     @Enumerated(EnumType.STRING)
     @Column(name="ds_estado", nullable = false, length = 20)
     private EstadoProduto estado;
+
+    @OneToMany(mappedBy = "produto")
+    private List<ProdutoPedido> itens;
 
 }

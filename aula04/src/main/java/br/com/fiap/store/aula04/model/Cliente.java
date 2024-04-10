@@ -9,6 +9,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter @Setter
 @NoArgsConstructor
@@ -46,6 +47,9 @@ public class Cliente {
     @Column(name="nr_pontos", precision = 10)
     private Integer pontos;
 
+    //Relacionamento 1:N (bidirecional)
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private List<Pedido> pedidos;
 
     public Cliente(CadastroClienteDto dto){
         nome = dto.nome();

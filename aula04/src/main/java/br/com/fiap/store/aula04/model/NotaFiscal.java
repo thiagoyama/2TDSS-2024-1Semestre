@@ -1,10 +1,16 @@
 package br.com.fiap.store.aula04.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name="aula4_nota_fiscal")
 public class NotaFiscal {
