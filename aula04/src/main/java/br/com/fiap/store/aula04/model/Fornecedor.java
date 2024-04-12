@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter @Setter
 @NoArgsConstructor
 
@@ -19,7 +21,11 @@ public class Fornecedor {
 
     @Column(name="nm_fornecedor", nullable = false, length = 50)
     private String nome;
+
     @Column(name="nr_cnpj", nullable = false, length = 22)
     private String cnpj;
+
+    @ManyToMany(mappedBy = "fornecedores")
+    private List<Produto> produtos;
 
 }

@@ -51,4 +51,10 @@ public class Produto {
     @OneToMany(mappedBy = "produto")
     private List<ProdutoPedido> itens;
 
+    @ManyToMany
+    @JoinTable(name = "AULA4_PRODUTO_FORNECEDOR",
+        joinColumns = @JoinColumn(name="cd_produto"),
+        inverseJoinColumns = @JoinColumn(name="cd_fornecedor"))
+    private List<Fornecedor> fornecedores;
+
 }
