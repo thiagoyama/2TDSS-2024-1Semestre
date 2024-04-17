@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter @Setter
 @NoArgsConstructor
 
@@ -22,5 +24,17 @@ public class Post {
 
     @Column(name = "ds_conteudo", nullable = false, length = 500)
     private String conteudo;
+
+    @ManyToMany
+    @JoinTable(name="TB_TAG_POST",
+        joinColumns = @JoinColumn(name="cd_post"),
+        inverseJoinColumns = @JoinColumn(name="cd_tag"))
+    private List<Tag> tags;
+
+    @OneToMany(mappedBy = "post")
+    private List<Comentario> comentarios;
+
+    @OneToOne(mappedBy = "post")
+    private DetalhesPost detalhes;
 
 }
