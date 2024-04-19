@@ -1,5 +1,6 @@
 package br.com.fiap.aula04.exercicio.model;
 
+import br.com.fiap.aula04.exercicio.dto.post.CadastroPostDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,7 +35,14 @@ public class Post {
     @OneToMany(mappedBy = "post")
     private List<Comentario> comentarios;
 
-    @OneToOne(mappedBy = "post")
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)
     private DetalhesPost detalhes;
+
+    public Post(CadastroPostDto dto){
+        titulo = dto.titulo();
+        conteudo = dto.conteudo();
+        detalhes = new DetalhesPost(dto);
+        detalhes.setPost(this); //seta a FK da relação
+    }
 
 }
