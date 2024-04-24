@@ -1,5 +1,6 @@
 package br.com.fiap.aula04.exercicio.model;
 
+import br.com.fiap.aula04.exercicio.dto.post.AtualizacaoPostDto;
 import br.com.fiap.aula04.exercicio.dto.post.CadastroPostDto;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -45,4 +46,12 @@ public class Post {
         detalhes.setPost(this); //seta a FK da relação
     }
 
+    public void atualizar(AtualizacaoPostDto dto) {
+        if (dto.titulo() != null){
+            this.titulo = dto.titulo();
+        }
+        if (dto.autor() != null){
+            this.detalhes.setAutor(dto.autor());
+        }
+    }
 }
