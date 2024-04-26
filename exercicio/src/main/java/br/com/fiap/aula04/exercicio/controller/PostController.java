@@ -1,9 +1,13 @@
 package br.com.fiap.aula04.exercicio.controller;
 
+import br.com.fiap.aula04.exercicio.dto.comentario.CadastroComentarioDto;
+import br.com.fiap.aula04.exercicio.dto.comentario.DetalhesComentarioDto;
 import br.com.fiap.aula04.exercicio.dto.post.AtualizacaoPostDto;
 import br.com.fiap.aula04.exercicio.dto.post.CadastroPostDto;
 import br.com.fiap.aula04.exercicio.dto.post.DetalhesPostDto;
+import br.com.fiap.aula04.exercicio.model.Comentario;
 import br.com.fiap.aula04.exercicio.model.Post;
+import br.com.fiap.aula04.exercicio.repository.ComentarioRepository;
 import br.com.fiap.aula04.exercicio.repository.PostRepository;
 import jakarta.validation.Valid;
 import lombok.Getter;
@@ -22,6 +26,23 @@ public class PostController {
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private ComentarioRepository comentarioRepository;
+
+    @PostMapping("{id}/comentarios")
+    @Transactional
+    public ResponseEntity<DetalhesComentarioDto> post(@PathVariable("id") Long id,
+                                                      @RequestBody @Valid CadastroComentarioDto dto,
+                                                      UriComponentsBuilder uriBuilder){
+        //chamar o repository post para pesquisar o post pelo codigo
+        var post = postRepository.getReferenceById(id);
+        //instanciar o comentário com o dto
+        var comentario = new Comentario(dto, post);
+        comentarioRepository.save(comentario);
+        var uri = uriBuilder.path("comentarios/{id}").buildAndExpand(comentario.getId()).toUri();
+        return ResponseEntity.created(uri).body(new DetalhesComentarioDto(comentario));
+    }
 
     @PostMapping
     @Transactional
