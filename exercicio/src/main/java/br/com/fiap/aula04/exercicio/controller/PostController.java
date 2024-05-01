@@ -9,6 +9,7 @@ import br.com.fiap.aula04.exercicio.model.Comentario;
 import br.com.fiap.aula04.exercicio.model.Post;
 import br.com.fiap.aula04.exercicio.repository.ComentarioRepository;
 import br.com.fiap.aula04.exercicio.repository.PostRepository;
+import br.com.fiap.aula04.exercicio.repository.TagRepository;
 import jakarta.validation.Valid;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,19 @@ public class PostController {
 
     @Autowired
     private ComentarioRepository comentarioRepository;
+
+    @Autowired
+    private TagRepository tagRepository;
+
+    @PutMapping("{idPost}/tags/{idTag}")
+    @Transactional
+    public ResponseEntity<DetalhesPostDto> put(@PathVariable("idPost") Long idPost,
+                                               @PathVariable("idTag") Long idTag) {
+        var post = postRepository.getReferenceById(idPost);
+        var tag = tagRepository.getReferenceById(idTag);
+        post.getTags().add(tag); //Acessa a lista de tags do post e adiciona a nova tag
+        return ResponseEntity.ok(new DetalhesPostDto(post));
+    }
 
     @PostMapping("{id}/comentarios")
     @Transactional

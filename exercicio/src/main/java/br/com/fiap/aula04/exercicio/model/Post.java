@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter @Setter
 @NoArgsConstructor
@@ -31,9 +32,9 @@ public class Post {
     @JoinTable(name="TB_TAG_POST",
         joinColumns = @JoinColumn(name="cd_post"),
         inverseJoinColumns = @JoinColumn(name="cd_tag"))
-    private List<Tag> tags;
+    private Set<Tag> tags;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comentario> comentarios;
 
     @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)
