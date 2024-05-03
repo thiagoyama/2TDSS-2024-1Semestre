@@ -34,6 +34,24 @@ public class PostController {
     @Autowired
     private TagRepository tagRepository;
 
+    @DeleteMapping("{idPost}/tags")
+    @Transactional
+    public ResponseEntity<Void> deleteTags(@PathVariable("idPost") Long idPost){
+        var post = postRepository.getReferenceById(idPost);
+        post.getTags().clear();
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("{idPost}/tags/{idTag}")
+    @Transactional
+    public ResponseEntity<Void> delete(@PathVariable("idPost") Long idPost,
+                                       @PathVariable("idTag") Long idTag) {
+        var post = postRepository.getReferenceById(idPost);
+        var tag = tagRepository.getReferenceById(idTag);
+        post.getTags().remove(tag);
+        return ResponseEntity.noContent().build();
+    }
+
     @PutMapping("{idPost}/tags/{idTag}")
     @Transactional
     public ResponseEntity<DetalhesPostDto> put(@PathVariable("idPost") Long idPost,

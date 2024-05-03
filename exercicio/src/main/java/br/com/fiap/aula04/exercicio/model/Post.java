@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -32,7 +33,7 @@ public class Post {
     @JoinTable(name="TB_TAG_POST",
         joinColumns = @JoinColumn(name="cd_post"),
         inverseJoinColumns = @JoinColumn(name="cd_tag"))
-    private Set<Tag> tags;
+    private Set<Tag> tags = new HashSet<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comentario> comentarios;

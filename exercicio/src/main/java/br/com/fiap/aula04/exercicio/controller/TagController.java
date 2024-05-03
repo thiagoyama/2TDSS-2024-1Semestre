@@ -26,7 +26,7 @@ public class TagController {
     public ResponseEntity<DetalhesTagDto> post(@RequestBody @Valid CadastroTagDto dto, UriComponentsBuilder uriBuilder){
         var tag = new Tag(dto);
         tagRepository.save(tag);
-        var uri = uriBuilder.path("posts/{id}").buildAndExpand(tag.getId()).toUri();
+        var uri = uriBuilder.path("tags/{id}").buildAndExpand(tag.getId()).toUri();
         return ResponseEntity.created(uri).body(new DetalhesTagDto(tag));
     }
 
