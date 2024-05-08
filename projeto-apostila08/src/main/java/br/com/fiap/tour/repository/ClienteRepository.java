@@ -16,5 +16,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     @Query("select c from Cliente c where c.dataNascimento = :data")
     Page<Cliente> buscarPorDataNascimento(@Param("data") LocalDate dataNascimento, Pageable page);
 
+    @Query("from Cliente c where c.nome like %:nome%")
+    Page<Cliente> buscarPorNome(@Param("nome") String nome, Pageable page);
 
 }
