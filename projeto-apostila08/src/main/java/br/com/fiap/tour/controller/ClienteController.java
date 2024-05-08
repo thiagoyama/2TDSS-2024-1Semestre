@@ -19,6 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
@@ -28,6 +31,13 @@ public class ClienteController {
 
     @Autowired
     private CidadeRepository cidadeRepository;
+
+    //Criar o endpoint para pesquisar o cliente pela data de nascimento
+    @GetMapping("por-data-nascimento")
+    public ResponseEntity<Page<DetalhesClienteDTO>> buscar(@RequestParam("data") LocalDate data, Pageable page) {
+        var lista = clienteRepository.buscarPorDataNascimento(data, page).map(DetalhesClienteDTO::new);
+        return ResponseEntity.ok(lista);
+    }
 
     @PostMapping
     @Transactional
