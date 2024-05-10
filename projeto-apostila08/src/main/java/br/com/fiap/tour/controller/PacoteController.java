@@ -25,6 +25,12 @@ public class PacoteController {
     @Autowired
     private DestinoRepository destinoRepository;
 
+    @GetMapping("por-destino")
+    public ResponseEntity<Page<DetalhesPacoteDTO>> buscar(@RequestParam("id-destino") Long id, Pageable pageable){
+        var lista = pacoteRepository.buscarPorDestino(id,pageable).map(DetalhesPacoteDTO::new);
+        return ResponseEntity.ok(lista);
+    }
+
     @PostMapping
     @Transactional
     public ResponseEntity<DetalhesPacoteDTO> cadastrar(@RequestBody @Valid CadastroPacoteDTO dto, UriComponentsBuilder builder) {

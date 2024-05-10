@@ -32,6 +32,18 @@ public class ClienteController {
     @Autowired
     private CidadeRepository cidadeRepository;
 
+    @GetMapping("por-estado")
+    public ResponseEntity<Page<DetalhesClienteDTO>> buscarPorEstado(@RequestParam("uf")String uf, Pageable pageable){
+        var lista = clienteRepository.buscarPorEstado(uf, pageable).map(DetalhesClienteDTO::new);
+        return ResponseEntity.ok(lista);
+    }
+
+    @GetMapping("por-nome")
+    public ResponseEntity<Page<DetalhesClienteDTO>> buscar(@RequestParam("nome")String nome, Pageable pageable){
+        var lista = clienteRepository.buscarPorNome(nome, pageable).map(DetalhesClienteDTO::new);
+        return ResponseEntity.ok(lista);
+    }
+
     //Criar o endpoint para pesquisar o cliente pela data de nascimento
     @GetMapping("por-data-nascimento")
     public ResponseEntity<Page<DetalhesClienteDTO>> buscar(@RequestParam("data") LocalDate data, Pageable page) {

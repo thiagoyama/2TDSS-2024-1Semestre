@@ -19,4 +19,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     @Query("from Cliente c where c.nome like %:nome%")
     Page<Cliente> buscarPorNome(@Param("nome") String nome, Pageable page);
 
+    @Query("from Cliente c where c.endereco.cidade.uf = :estado")
+    Page<Cliente> buscarPorEstado(String estado, Pageable pageable);
+
 }
