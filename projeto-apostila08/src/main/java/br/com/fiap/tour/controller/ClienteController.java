@@ -32,6 +32,13 @@ public class ClienteController {
     @Autowired
     private CidadeRepository cidadeRepository;
 
+
+    @GetMapping("por-valor-pacote")
+    public ResponseEntity<Page<DetalhesClienteDTO>> buscarPorPrecoPacote(@RequestParam("valor") Double valor, Pageable pageable){
+        var lista = clienteRepository.buscarPorValorPacote(valor, pageable).map(DetalhesClienteDTO::new);
+        return ResponseEntity.ok(lista);
+    }
+
     @GetMapping("por-estado")
     public ResponseEntity<Page<DetalhesClienteDTO>> buscarPorEstado(@RequestParam("uf")String uf, Pageable pageable){
         var lista = clienteRepository.buscarPorEstado(uf, pageable).map(DetalhesClienteDTO::new);
