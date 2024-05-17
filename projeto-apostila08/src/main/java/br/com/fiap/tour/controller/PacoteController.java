@@ -15,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @RestController
 @RequestMapping("/pacotes")
 public class PacoteController {
@@ -24,6 +27,13 @@ public class PacoteController {
 
     @Autowired
     private DestinoRepository destinoRepository;
+
+    @GetMapping("por-data")
+    public ResponseEntity<Page<DetalhesPacoteDTO>> buscar(@RequestParam("data-inicio")LocalDate inicio,
+                                                          @RequestParam("data-fim") LocalDate fim, Pageable pageable) {
+        var lista = pacoteRepository.buscarPorData(inicio,fim,pageable).map(DetalhesPacoteDTO::new);
+        return ResponseEntity.ok(lista);
+    }
 
     @GetMapping("por-destino")
     public ResponseEntity<Page<DetalhesPacoteDTO>> buscar(@RequestParam("id-destino") Long id, Pageable pageable){
