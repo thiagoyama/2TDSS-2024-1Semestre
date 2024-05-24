@@ -10,6 +10,7 @@ import br.com.fiap.tour.dto.reserva.DetalhesReservaDTO;
 import br.com.fiap.tour.repository.ReservaRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +18,28 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @RestController
 @RequestMapping("/reservas")
 public class ReservaController {
 
     @Autowired
     private ReservaRepository reservaRepository;
+
+    @GetMapping("por-cpf-cliente")
+    public ResponseEntity<Page<DetalhesReservaDTO>> buscarPorCpf(@RequestParam("cpf") String cpf, Pageable pageable){
+        var reservas = reservaRepository.findByClienteCpfEquals(cpf, pageable).map(DetalhesReservaDTO::new);
+        return ResponseEntity.ok(reservas);
+    }
+
+    @GetMapping("por-data-reserva")
+    public ResponseEntity<Page<DetalhesReservaDTO>> buscarPorData(@RequestParam("data-inicio") LocalDateTime dataInicio,
+                                                                  @RequestParam("data-fim") LocalDateTime dataFim, Pageable pageable){
+        var reservas = reservaRepository.findByDataBetween(dataInicio, dataFim, pageable).map(DetalhesReservaDTO::new);
+        return ResponseEntity.ok(reservas);
+    }
 
     @PostMapping
     @Transactional

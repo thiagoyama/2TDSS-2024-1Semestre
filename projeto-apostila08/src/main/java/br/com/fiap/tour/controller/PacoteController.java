@@ -28,6 +28,12 @@ public class PacoteController {
     @Autowired
     private DestinoRepository destinoRepository;
 
+    @GetMapping("por-valor-menor")
+    public ResponseEntity<Page<DetalhesPacoteDTO>> buscar(@RequestParam("valor")Float valor, Pageable pageable){
+        var pacotes = pacoteRepository.findByValorLessThan(valor, pageable).map(DetalhesPacoteDTO::new);
+        return ResponseEntity.ok(pacotes);
+    }
+
     @GetMapping("por-data")
     public ResponseEntity<Page<DetalhesPacoteDTO>> buscar(@RequestParam("data-inicio")LocalDate inicio,
                                                           @RequestParam("data-fim") LocalDate fim, Pageable pageable) {

@@ -10,6 +10,8 @@ import java.time.LocalDate;
 
 public interface PacoteRepository extends JpaRepository<Pacote, Long> {
 
+    Page<Pacote> findByValorLessThan(Float valor, Pageable page);
+
     @Query("from Pacote p where p.destino.id = :id")
     Page<Pacote>  buscarPorDestino(Long id, Pageable pageable);
 
